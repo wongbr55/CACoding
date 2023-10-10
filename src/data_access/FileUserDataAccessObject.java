@@ -7,6 +7,7 @@ import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,7 +85,18 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
-
+    public void clear(){
+        // Removes all of the users in the users.csv file
+        FileWriter writer;
+        try {
+            writer = new FileWriter(csvFile, false);
+            writer.write("");
+            writer.close();
+        }
+        catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Return whether a user exists with username identifier.

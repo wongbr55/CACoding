@@ -1,6 +1,9 @@
 package use_case.clear_users;
-
-// TODO Complete me
-
 public class ClearOutputData {
+
+    private boolean hasCleared;
+
+    public ClearOutputData(boolean hasCleared){
+        this.hasCleared = hasCleared;
+    }
 }
