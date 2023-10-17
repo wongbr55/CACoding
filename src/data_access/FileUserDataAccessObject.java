@@ -2,6 +2,7 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
+import use_case.clear_users.ClearUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, ClearUserDataAccessInterface {
 
     private final File csvFile;
 
@@ -85,17 +86,15 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
-    public void clear(){
+    public ArrayList<String> clear(){
         // Removes all of the users in the users.csv file
-        FileWriter writer;
-        try {
-            writer = new FileWriter(csvFile, false);
-            writer.write("");
-            writer.close();
-        }
-        catch (IOException e){
-            throw new RuntimeException(e);
-        }
+        ArrayList<String> users = new ArrayList<>();
+//        for (String username : this.accounts.keySet()) {
+//            users.add(username);
+//        }
+        accounts.clear();
+        this.save();
+        return users;
     }
 
     /**

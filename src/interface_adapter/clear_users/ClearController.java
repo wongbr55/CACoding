@@ -1,14 +1,14 @@
 package interface_adapter.clear_users;
-import use_case.clear_users.ClearInteractor;
+import use_case.clear_users.ClearInputBoundary;
 public class ClearController {
 
-    final private ClearInteractor clearInteractor;
+    final private ClearInputBoundary clearInputBoundary;
 
-    public ClearController(ClearInteractor clearInteractor){
-        this.clearInteractor = clearInteractor;
+    public ClearController(ClearInputBoundary clearInputBoundary){
+        this.clearInputBoundary = clearInputBoundary;
     }
 
     public void execute(){
-        this.clearInteractor.execute();
+        this.clearInputBoundary.execute();
     }
 }
