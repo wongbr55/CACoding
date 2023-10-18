@@ -8,15 +8,15 @@ import javax.swing.text.View;
 
 public class ClearPresenter implements ClearOutputBoundary {
 
-    private final ViewModel viewModel;
+    private final ClearViewModel viewModel;
 
-    public ClearPresenter(ViewModel viewModel){
+    public ClearPresenter(ClearViewModel viewModel){
         this.viewModel = viewModel;
     }
 
     @Override
     public void prepareView(ClearOutputData user){
-
+        this.viewModel.setDeletedUsers(user.getDeletedUsers());
 
     }
 }

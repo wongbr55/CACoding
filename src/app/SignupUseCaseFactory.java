@@ -3,6 +3,7 @@ package app;
 import data_access.FileUserDataAccessObject;
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearPresenter;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -26,12 +27,12 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, FileUserDataAccessObject userDataAccessObject) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, FileUserDataAccessObject userDataAccessObject, ClearViewModel clearViewModel) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            ClearController clearController = createClearController(signupViewModel, userDataAccessObject);
-            return new SignupView(signupController, signupViewModel, clearController);
+            ClearController clearController = createClearController(clearViewModel, userDataAccessObject);
+            return new SignupView(signupController, signupViewModel, clearController, clearViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -53,8 +54,8 @@ public class SignupUseCaseFactory {
     }
 
 
-    private static ClearController createClearController(SignupViewModel signupViewModel, FileUserDataAccessObject userDataAccessObject) throws IOException {
-        ClearPresenter clearPresenter = new ClearPresenter(signupViewModel);
+    private static ClearController createClearController(ClearViewModel clearViewModel, FileUserDataAccessObject userDataAccessObject) throws IOException {
+        ClearPresenter clearPresenter = new ClearPresenter(clearViewModel);
 
         ClearInteractor clearInteractor = new ClearInteractor(clearPresenter, userDataAccessObject);
 

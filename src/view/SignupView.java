@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.clear_users.ClearState;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -13,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
@@ -25,16 +28,19 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private final ClearController clearController;
 
+    private final ClearViewModel clearViewModel;
+
     private final JButton signUp;
     private final JButton cancel;
 
     private final JButton clear;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ClearController clearController, ClearViewModel clearViewModel) {
 
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         this.clearController = clearController;
+        this.clearViewModel = clearViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
@@ -76,6 +82,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         clearController.execute();
+                        ClearState clearState = clearViewModel.getState();
+                        showClearMessage(clearState.getDeletedUsers());
                     }
                 }
         );
@@ -161,6 +169,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
      */
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");
+    }
+
+    public void showClearMessage(ArrayList<String> deletedUsers){
+        JOptionPane.showMessageDialog(this, deletedUsers);
     }
 
     @Override

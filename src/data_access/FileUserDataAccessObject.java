@@ -89,9 +89,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     public ArrayList<String> clear(){
         // Removes all of the users in the users.csv file
         ArrayList<String> users = new ArrayList<>();
-//        for (String username : this.accounts.keySet()) {
-//            users.add(username);
-//        }
+        for (String username : this.accounts.keySet()) {
+            users.add(username);
+        }
         accounts.clear();
         this.save();
         return users;
